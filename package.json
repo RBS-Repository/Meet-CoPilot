@@ -1,0 +1,22 @@
+{
+  "name": "meeting-copilot",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,client,electron -c blue,green,yellow \"npm run dev -w server\" \"npm run dev -w client\" \"wait-on http://localhost:5173 http://localhost:5000/health && electron .\"",
+    "build": "npm run build -w client && npm run build -w server",
+    "start": "npm run build && concurrently -k -n server,electron \"npm run start -w server\" \"electron .\"",
+    "electron": "electron ."
+  },
+  "main": "electron/main.js",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "electron": "^34.2.0",
+    "tsx": "^4.19.3",
+    "wait-on": "^8.0.3"
+  }
+}
